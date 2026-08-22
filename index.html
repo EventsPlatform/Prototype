@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lensly — Book Trusted Photographers &amp; Creatives</title>
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<div class="topbar">
+  <div class="wrap nav">
+    <div class="brand" style="cursor:pointer" data-nav="marketplace"><div class="mark">L</div>Lensly</div>
+    <div class="navlinks" id="navlinks">
+      <button data-nav="marketplace">Marketplace</button>
+      <button data-nav="about">About</button>
+      <button data-nav="meet">Meet the Team</button>
+      <button data-nav="contact">Contact</button>
+    </div>
+    <div class="navright">
+      <div class="role-switch" id="roleSwitch">
+        <button data-role="guest" class="active">Guest</button>
+        <button data-role="consumer">Consumer</button>
+        <button data-role="provider">Provider</button>
+        <button data-role="admin">Admin</button>
+      </div>
+      <button class="btn btn-ghost btn-sm" id="authBtn" data-nav="auth">Log in</button>
+    </div>
+  </div>
+</div>
+
+<main class="wrap">
+
+<!-- ============ MARKETPLACE (opening page) ============ -->
+<section id="view-marketplace" class="view">
+
+  <div class="section" style="padding-top:56px;padding-bottom:36px;">
+    <div class="eyebrow">Dynamic · Marketplace — open to everyone</div>
+    <div class="h1">Book vetted photographers &amp;<br>creatives, without the guesswork.</div>
+    <p class="lead" style="margin-top:16px;">Browse rated, reviewed service providers for weddings, events, portraits, product shoots and more — no account needed to look around. Payment is only released once the work is done.</p>
+    <div class="stat-row-inline">
+      <span><b id="heroProviderCount">384</b> active providers</span>
+      <span><b>2,400+</b> bookings completed</span>
+      <span>Ratings shown only after <b>10+</b> reviews</span>
+    </div>
+    <div style="display:flex;gap:12px;margin-top:24px;">
+      <button class="btn btn-primary" onclick="document.getElementById('browseAnchor').scrollIntoView({behavior:'smooth'})">Explore providers</button>
+      <button class="btn btn-ghost" data-nav="auth" data-authtab="register">Become a provider</button>
+    </div>
+  </div>
+
+  <div class="section-tight" id="browseAnchor">
+    <div class="controls-row">
+      <input id="searchInput" type="text" placeholder="Search by name, service or city…">
+      <select id="sortSelect">
+        <option value="rating">Sort: Top rated</option>
+        <option value="reviews">Sort: Most reviewed</option>
+        <option value="price-asc">Sort: Price (low to high)</option>
+        <option value="price-desc">Sort: Price (high to low)</option>
+      </select>
+      <select id="priceSelect">
+        <option value="any">Any price</option>
+        <option value="u1000">Under 1,000 SAR</option>
+        <option value="1000-2000">1,000 – 2,000 SAR</option>
+        <option value="2000plus">2,000 SAR+</option>
+      </select>
+      <select id="citySelect">
+        <option value="All">All cities</option>
+      </select>
+    </div>
+    <div class="filter-bar" id="tagFilterBar"></div>
+    <div class="grid grid-3" id="marketplaceGrid"></div>
+    <div style="text-align:center;margin-top:28px;">
+      <button class="btn btn-ghost" id="loadMoreBtn" onclick="loadMore()">Load more providers</button>
+    </div>
+  </div>
+
+  <div class="section-tight section-alt">
+    <div class="wrap" style="padding:0;">
+      <div class="h3" style="margin-bottom:22px;">How Lensly works</div>
+      <div class="grid grid-3">
+        <div class="card pad-lg">
+          <div class="badge badge-accent" style="margin-bottom:14px;">Step 1</div>
+          <div class="h3">Browse &amp; compare</div>
+          <p class="muted" style="margin-top:8px;font-size:14px;">Filter by service type, city and price. Ratings only appear once a provider has 10+ reviews, so early scores can't skew your decision.</p>
+        </div>
+        <div class="card pad-lg">
+          <div class="badge badge-accent" style="margin-bottom:14px;">Step 2</div>
+          <div class="h3">Book &amp; pay securely</div>
+          <p class="muted" style="margin-top:8px;font-size:14px;">Pay a deposit to confirm, with optional shoot insurance. VAT and platform fees are itemized up front — nothing hidden.</p>
+        </div>
+        <div class="card pad-lg">
+          <div class="badge badge-accent" style="margin-bottom:14px;">Step 3</div>
+          <div class="h3">Receive your work</div>
+          <p class="muted" style="margin-top:8px;font-size:14px;">Once you confirm delivery, funds are released to the provider. Leave a review to help the next customer.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-tight">
+    <div class="card pad-lg" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;background:var(--text);color:#fff;border:none;">
+      <div>
+        <div class="h3" style="color:#fff;">Ready to offer your services?</div>
+        <p style="color:#CFCDD6;font-size:14px;margin-top:6px;">Register as an individual freelancer or as a registered business, add your portfolio and certificates, and start getting booked.</p>
+      </div>
+      <button class="btn btn-primary" data-nav="auth" data-authtab="register">Register as a provider</button>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ABOUT ============ -->
+<section id="view-about" class="view hidden">
+  <div class="section">
+    <div class="eyebrow">Static · About</div>
+    <div class="h2">Built for people who take their craft seriously.</div>
+    <p class="lead" style="margin-top:14px;">Lensly started as a way to make it easier to find creative talent worth trusting — and easier for that talent to get paid fairly and on time.</p>
+    <div class="grid grid-3" style="margin-top:36px;">
+      <div class="card pad-lg"><div class="h3">Our mission</div><p class="muted" style="margin-top:10px;font-size:14px;">Give every independent photographer, videographer and creative studio the same discovery tools that big agencies have.</p></div>
+      <div class="card pad-lg"><div class="h3">Trust &amp; safety</div><p class="muted" style="margin-top:10px;font-size:14px;">Business accounts verify a Commercial Registration number and VAT certificate, and payments stay in escrow until clients confirm delivery.</p></div>
+      <div class="card pad-lg"><div class="h3">Fair by default</div><p class="muted" style="margin-top:10px;font-size:14px;">Transparent fees, visible rating thresholds, and dispute-friendly deposits — for consumers and providers alike.</p></div>
+    </div>
+    <div class="grid grid-4" style="margin-top:36px;">
+      <div class="stat card"><div class="num">2,400+</div><div class="label">Bookings completed</div></div>
+      <div class="stat card"><div class="num" id="aboutProviderCount">384</div><div class="label">Active providers</div></div>
+      <div class="stat card"><div class="num">4.8</div><div class="label">Average rating</div></div>
+      <div class="stat card"><div class="num" id="aboutCityCount">8</div><div class="label">Cities covered</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ MEET THE TEAM ============ -->
+<section id="view-meet" class="view hidden">
+  <div class="section">
+    <div class="eyebrow">Static · Meet us</div>
+    <div class="h2">The team behind Lensly</div>
+    <p class="lead" style="margin-top:14px;">A small team obsessed with getting the details right — for both sides of the booking.</p>
+    <div class="grid grid-4" style="margin-top:30px;" id="teamGrid"></div>
+  </div>
+</section>
+
+<!-- ============ CONTACT ============ -->
+<section id="view-contact" class="view hidden">
+  <div class="section">
+    <div class="eyebrow">Static · Contact us</div>
+    <div class="h2">Get in touch</div>
+    <div class="grid grid-2" style="margin-top:26px;align-items:start;">
+      <div class="card pad-lg">
+        <div class="field"><label>Name</label><input type="text" placeholder="Your name"></div>
+        <div class="field"><label>Email</label><input type="email" placeholder="you@example.com"></div>
+        <div class="field"><label>I am a...</label>
+          <select><option>Customer</option><option>Service provider</option><option>Press / partnership</option></select>
+        </div>
+        <div class="field"><label>Message</label><textarea rows="4" placeholder="How can we help?"></textarea></div>
+        <button class="btn btn-primary btn-block" onclick="showToast('Message sent — this is a prototype, no email was actually sent.')">Send message</button>
+      </div>
+      <div>
+        <div class="card pad-lg" style="margin-bottom:16px;">
+          <div class="h3" style="font-size:15px;">Support</div>
+          <p class="muted" style="font-size:14px;margin-top:6px;">support@lensly.example · Sun–Thu, 9am–6pm</p>
+        </div>
+        <div class="card pad-lg" style="margin-bottom:16px;">
+          <div class="h3" style="font-size:15px;">Offices</div>
+          <p class="muted" style="font-size:14px;margin-top:6px;">Riyadh · Jeddah · Dammam</p>
+        </div>
+        <div class="card pad-lg">
+          <div class="h3" style="font-size:15px;">Provider onboarding</div>
+          <p class="muted" style="font-size:14px;margin-top:6px;">providers@lensly.example — for certificate verification and business (CR / VAT) accounts.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PROVIDER PROFILE ============ -->
+<section id="view-provider" class="view hidden">
+  <div class="section" id="providerDetail"></div>
+</section>
+
+<!-- ============ LOGIN / REGISTER ============ -->
+<section id="view-auth" class="view hidden">
+  <div class="section" style="max-width:500px;margin:0 auto;">
+    <div class="eyebrow" style="text-align:center;">Dynamic · Login / Register</div>
+    <div class="tabs" style="justify-content:center;" id="authTabs">
+      <button data-authtab="login" class="active">Log in</button>
+      <button data-authtab="register">Register</button>
+    </div>
+
+    <div class="card pad-lg" id="loginPanel">
+      <div class="field"><label>Email</label><input type="email" placeholder="you@example.com"></div>
+      <div class="field"><label>Password</label><input type="password" placeholder="••••••••"></div>
+      <p class="faint" style="font-size:12.5px;margin-bottom:16px;">2FA will be requested here for Provider and Admin accounts.</p>
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        <button class="btn btn-primary btn-block" onclick="mockLogin('consumer')">Log in as Consumer (demo)</button>
+        <button class="btn btn-ghost btn-block" onclick="mockLogin('provider')">Log in as Provider (demo)</button>
+        <button class="btn btn-ghost btn-block" onclick="mockLogin('admin')">Log in as Admin (demo)</button>
+      </div>
+    </div>
+
+    <div class="card pad-lg hidden" id="registerPanel">
+      <div class="field"><label>Full name</label><input type="text" placeholder="Full name"></div>
+      <div class="field"><label>Email</label><input type="email" placeholder="you@example.com"></div>
+      <div class="field"><label>Password</label><input type="password" placeholder="Create a password"></div>
+      <div class="field">
+        <label>Account type</label>
+        <div style="display:flex;gap:8px;" id="regRoleChoice">
+          <button type="button" class="chip active" data-regrole="consumer" style="flex:1;">Service consumer</button>
+          <button type="button" class="chip" data-regrole="provider" style="flex:1;">Service provider</button>
+        </div>
+      </div>
+
+      <div id="providerFields" class="hidden">
+        <div class="field"><label>Type of service</label>
+          <select><option>Wedding photography</option><option>Portrait</option><option>Event</option><option>Product / e-commerce</option><option>Videography</option><option>Real estate</option></select>
+        </div>
+        <div class="field"><label>How will you operate?</label>
+          <div style="display:flex;gap:8px;" id="bizTypeChoice">
+            <button type="button" class="chip active" data-biztype="individual" style="flex:1;">Individual (freelance / part-time)</button>
+            <button type="button" class="chip" data-biztype="business" style="flex:1;">Business</button>
+          </div>
+        </div>
+
+        <div id="individualFields">
+          <p class="hint" style="margin:-6px 0 16px;">You'll book jobs as a freelancer under your own name. No commercial registration required.</p>
+        </div>
+
+        <div id="businessFields" class="hidden">
+          <div class="field"><label>Business name</label><input type="text" placeholder="e.g. Khalid Studios for Photography LLC"></div>
+          <div class="field"><label>CR Number (Commercial Registration)</label><input type="text" placeholder="1010xxxxxx"></div>
+          <div class="field"><label>VAT Certificate</label><input type="file" accept=".pdf,.jpg,.png"><p class="hint">Upload your VAT registration certificate as issued by ZATCA — required before your listing goes live.</p></div>
+        </div>
+
+        <div class="kicker-banner" style="margin-bottom:16px;">Two-factor authentication (2FA) will be required on this account, since it's a provider account.</div>
+      </div>
+
+      <label style="display:flex;align-items:flex-start;gap:9px;font-size:13.5px;color:var(--text-dim);margin:6px 0 18px;">
+        <input type="checkbox" id="agreeTerms" style="width:auto;margin-top:2px;">
+        <span>I agree to the <a href="#" onclick="openTerms();return false;" style="color:var(--accent);font-weight:600;">Terms &amp; Conditions</a>.</span>
+      </label>
+
+      <button class="btn btn-primary btn-block" onclick="mockRegister()">Create account</button>
+    </div>
+  </div>
+</section>
+
+<!-- ============ DASHBOARD (User Home) ============ -->
+<section id="view-dashboard" class="view hidden">
+  <div class="section">
+    <div class="eyebrow">Dynamic · User Home</div>
+    <div id="dashHeader" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:26px;"></div>
+    <div id="dashboardRoot"></div>
+  </div>
+</section>
+
+<!-- ============ CHECKOUT ============ -->
+<section id="view-checkout" class="view hidden">
+  <div class="section" id="checkoutRoot" style="max-width:640px;margin:0 auto;"></div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap foot-row">
+    <div>© 2026 Lensly · Static UI prototype — no real accounts, payments or data are processed.</div>
+    <div style="display:flex;gap:16px;">
+      <span data-nav="about">About</span>
+      <span data-nav="contact">Contact</span>
+      <span data-nav="marketplace">Marketplace</span>
+      <span onclick="openTerms()">Terms &amp; Conditions</span>
+    </div>
+  </div>
+</footer>
+
+<div class="toast" id="toast"></div>
+<div id="modalRoot"></div>
+
+<!--
+  Scripts are loaded as classic (non-module) scripts, in dependency order,
+  because the rendered markup relies on globally-available functions
+  referenced from inline `onclick` handlers (e.g. onclick="navigate(...)").
+  `defer` keeps execution order while letting the browser fetch them
+  in parallel, and ensures the DOM is parsed before any script runs.
+-->
+<script src="js/helpers.js" defer></script>
+<script src="js/data.js" defer></script>
+<script src="js/state.js" defer></script>
+<script src="js/toast.js" defer></script>
+<script src="js/nav.js" defer></script>
+<script src="js/team.js" defer></script>
+<script src="js/marketplace.js" defer></script>
+<script src="js/provider-detail.js" defer></script>
+<script src="js/terms-modal.js" defer></script>
+<script src="js/auth.js" defer></script>
+<script src="js/dashboard.js" defer></script>
+<script src="js/checkout.js" defer></script>
+<script src="js/main.js" defer></script>
+</body>
+</html>

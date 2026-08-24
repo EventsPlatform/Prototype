@@ -4,10 +4,10 @@
 function openTerms() {
   document.getElementById('modalRoot').innerHTML = `
     <div class="modal-overlay" onclick="if(event.target===this) closeTerms()">
-      <div class="modal-card">
+      <div class="modal-card" role="dialog" aria-modal="true" aria-label="Terms and Conditions">
         <div class="modal-head">
           <div class="h3" style="font-size:17px;">Terms &amp; Conditions</div>
-          <button class="btn btn-ghost btn-sm" onclick="closeTerms()">Close</button>
+          <button class="btn btn-ghost btn-sm" onclick="closeTerms()" id="closeTermsBtn">Close</button>
         </div>
         <div class="modal-body">
           <p class="faint" style="margin-bottom:14px;">Last updated August 2026 · Prototype content, for demonstration only.</p>
@@ -45,4 +45,4 @@ function openTerms() {
       </div>
     </div>`;
 }
-function closeTerms() { document.getElementById('modalRoot').innerHTML = ''; }
+function closeTerms() { document.getElementById('modalRoot').innerHTML = ''; window.currentModalEscape = null; }

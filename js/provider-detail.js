@@ -15,8 +15,8 @@ function renderProviderDetail() {
 
   document.getElementById('providerDetail').innerHTML = `
     <button class="btn btn-ghost btn-sm" onclick="navigate('marketplace')" style="margin-bottom:20px;">← Back to marketplace</button>
-    <div class="grid" style="grid-template-columns:2fr 1fr;gap:28px;align-items:start;">
-      <div>
+    <div class="grid provider-detail-grid" style="grid-template-columns:2fr 1fr;gap:28px;align-items:start;">
+      <div class="provider-main">
         <div style="display:flex;gap:16px;align-items:center;">
           ${avatarHTML(p.name, 72)}
           <div>
@@ -80,15 +80,15 @@ function renderProviderDetail() {
         <div class="grid grid-3">${similar.map(providerCardHTML).join('')}</div>` : ''}
       </div>
 
-      <div>
+      <div class="provider-sidebar">
         <div class="card pad-lg" style="position:sticky;top:90px;">
           <div class="faint" style="font-size:12.5px;">Starting from</div>
           <div class="h2">${fmtSAR(p.priceFrom)}</div>
-          <button class="btn btn-primary btn-block" style="margin-top:16px;" onclick="navigate('checkout',{providerId:${p.id}})">Book now</button>
+          <button class="btn btn-primary btn-block" style="margin-top:16px;" onclick="navigate('checkout',{providerId:${p.id},date:'${avail[0].raw}'})">Book now</button>
           <button class="btn btn-ghost btn-block" style="margin-top:10px;" onclick="toggleFavorite(${p.id})">${isFav ? '★ Saved to favorites' : '☆ Save to favorites'}</button>
           <div class="divider"></div>
-          <div class="hint" style="margin-bottom:8px;font-weight:600;color:var(--text-dim);">Next available</div>
-          <div>${avail.map(d => `<span class="tag-chip">${d}</span>`).join('')}</div>
+          <div class="hint" style="margin-bottom:8px;font-weight:600;color:var(--text-dim);">Next available — pick a date</div>
+          <div class="avail-dates">${avail.map((d, i) => `<button type="button" class="tag-chip avail-chip ${i === 0 ? 'active' : ''}" onclick="navigate('checkout',{providerId:${p.id},date:'${d.raw}'})">${d.label}</button>`).join('')}</div>
           <div class="divider"></div>
           <div style="font-size:13px;" class="muted">
             <div style="display:flex;justify-content:space-between;margin-bottom:8px;"><span>Security deposit</span><span>${(FEES.depositRate * 100) | 0}%</span></div>
@@ -113,7 +113,7 @@ function openLightbox(providerId, index) {
   state.lightboxProviderId = providerId; state.lightboxIndex = index;
   renderLightbox();
 }
-function closeLightbox() { document.getElementById('modalRoot').innerHTML = ''; }
+function closeLightbox() { document.getElementById('modalRoot').innerHTML = ''; window.currentModalEscape = null; }
 function shiftLightbox(delta) {
   const p = PROVIDERS.find(x => x.id === state.lightboxProviderId);
   const n = p.freelance.length;
@@ -124,18 +124,24 @@ function renderLightbox() {
   const p = PROVIDERS.find(x => x.id === state.lightboxProviderId);
   if (!p) return;
   const label = p.freelance[state.lightboxIndex];
+  window.currentModalEscape = closeLightbox;
   document.getElementById('modalRoot').innerHTML = `
     <div class="lightbox-overlay" onclick="if(event.target===this) closeLightbox()">
-      <div class="lightbox-card">
+      <div class="lightbox-card" role="dialog" aria-modal="true" aria-label="Media viewer: ${label}">
         <div class="lightbox-media" style="background-image:${mediaGradient(p.name + state.lightboxIndex)}"><span>${label}</span></div>
         <div class="lightbox-controls">
-          <button class="btn btn-ghost btn-sm" onclick="shiftLightbox(-1)">Previous</button>
+          <button class="btn btn-ghost btn-sm" onclick="shiftLightbox(-1)" aria-label="Previous media">← Previous</button>
           <span class="faint" style="font-size:12.5px;">${state.lightboxIndex + 1} / ${p.freelance.length} · ${p.name}</span>
-          <button class="btn btn-ghost btn-sm" onclick="shiftLightbox(1)">Next</button>
+          <button class="btn btn-ghost btn-sm" onclick="shiftLightbox(1)" aria-label="Next media">Next →</button>
         </div>
         <div style="text-align:center;margin-top:12px;">
-          <button class="btn btn-ghost btn-sm" onclick="closeLightbox()">Close</button>
+          <button class="btn btn-ghost btn-sm" onclick="closeLightbox()" autofocus>Close</button>
         </div>
       </div>
     </div>`;
 }
+document.addEventListener('keydown', e => {
+  if (!document.querySelector('.lightbox-overlay')) return;
+  if (e.key === 'ArrowLeft') shiftLightbox(-1);
+  if (e.key === 'ArrowRight') shiftLightbox(1);
+});

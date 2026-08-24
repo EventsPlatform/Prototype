@@ -23,6 +23,11 @@ function renderDashboard() {
   else if (state.role === 'provider') root.innerHTML = providerDashboardHTML();
   else root.innerHTML = adminDashboardHTML();
   initTabs();
+  if (state.dashboardTab) { selectTab(state.dashboardTab); state.dashboardTab = null; }
+}
+function selectTab(tabId) {
+  const btn = document.querySelector('.tabs button[data-tab="' + tabId + '"]');
+  if (btn) btn.click();
 }
 function initTabs() {
   document.querySelectorAll('.tabs').forEach(tabset => {
@@ -62,12 +67,12 @@ function consumerDashboardHTML() {
   </div>
 
   <div class="tabpanel" data-group="consumer" data-panel="bookings">
-    <table>
+    <div class="table-scroll"><table>
       <tr><th>Provider</th><th>Service</th><th>Date</th><th>Status</th><th>Payment</th></tr>
       ${BOOKINGS.map(b => `<tr><td>${b.provider}</td><td>${b.service}</td><td>${b.date}</td>
         <td><span class="badge ${b.status === 'Upcoming' ? 'badge-accent' : b.status === 'Completed' ? 'badge-green' : 'badge-red'}">${b.status}</span></td>
         <td class="muted">${b.escrow}</td></tr>`).join('')}
-    </table>
+    </table></div>
   </div>
 
   <div class="tabpanel" data-group="consumer" data-panel="favorites">
@@ -145,12 +150,12 @@ function providerDashboardHTML() {
   </div>
 
   <div class="tabpanel" data-group="provider" data-panel="payments">
-    <table>
+    <div class="table-scroll"><table>
       <tr><th>Booking</th><th>Client</th><th>Amount</th><th>Status</th></tr>
       <tr><td>#8841</td><td>Huda M.</td><td>1,200 SAR</td><td><span class="badge badge-amber">Held until complete</span></td></tr>
       <tr><td>#8790</td><td>Abdullah S.</td><td>950 SAR</td><td><span class="badge badge-green">Released</span></td></tr>
       <tr><td>#8703</td><td>Reem K.</td><td>1,500 SAR</td><td><span class="badge badge-green">Released</span></td></tr>
-    </table>
+    </table></div>
     <p class="faint" style="font-size:12.5px;margin-top:12px;">A ${(FEES.platformRate * 100) | 0}% platform fee and ${(FEES.vatRate * 100) | 0}% VAT are deducted before payout; the remaining balance is held in escrow until the client confirms delivery.</p>
   </div>
 
@@ -186,13 +191,13 @@ function adminDashboardHTML() {
   </div>
 
   <div class="tabpanel" data-group="admin" data-panel="users">
-    <table>
+    <div class="table-scroll"><table>
       <tr><th>Name</th><th>Role</th><th>Status</th></tr>
       <tr><td>Huda M.</td><td>Consumer</td><td><span class="badge badge-green">Active</span></td></tr>
       <tr><td>Sara Al-Harbi</td><td>Provider (Individual)</td><td><span class="badge badge-green">Active</span></td></tr>
       <tr><td>Khalid Studios</td><td>Provider (Business)</td><td><span class="badge badge-green">Active</span></td></tr>
       <tr><td>Reem K.</td><td>Consumer</td><td><span class="badge badge-gray">Inactive</span></td></tr>
-    </table>
+    </table></div>
   </div>
 
   <div class="tabpanel" data-group="admin" data-panel="approvals">
@@ -211,11 +216,11 @@ function adminDashboardHTML() {
   </div>
 
   <div class="tabpanel" data-group="admin" data-panel="payments">
-    <table>
+    <div class="table-scroll"><table>
       <tr><th>Booking</th><th>Consumer</th><th>Provider</th><th>Amount</th><th>Status</th></tr>
       ${ADMIN_PAYMENTS.map(p => `<tr><td>${p.booking}</td><td>${p.consumer}</td><td>${p.provider}</td><td>${p.amount}</td>
         <td><span class="badge ${p.status.includes('Held') ? 'badge-amber' : p.status.includes('Disputed') ? 'badge-red' : 'badge-green'}">${p.status}</span></td></tr>`).join('')}
-    </table>
+    </table></div>
   </div>
 
   <div class="tabpanel" data-group="admin" data-panel="settings">

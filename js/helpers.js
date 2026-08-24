@@ -29,7 +29,8 @@ function mediaGradient(seed) {
 }
 
 function mediaBlockHTML(label, seed, onclick) {
-  return `<div class="media-block" style="background-image:${mediaGradient(seed)}" ${onclick ? `onclick="${onclick}"` : ''}><span>${label}</span></div>`;
+  const interactiveAttrs = onclick ? `onclick="${onclick}" tabindex="0" role="button" aria-label="Open media: ${label}"` : '';
+  return `<div class="media-block" style="background-image:${mediaGradient(seed)}" ${interactiveAttrs}><span>${label}</span></div>`;
 }
 
 function fmtSAR(n) {
@@ -44,5 +45,8 @@ function nextAvailableDates(n) {
     if (d.getDay() !== 5) { out.push(new Date(d)); }
     d.setDate(d.getDate() + (out.length % 2 === 0 ? 2 : 3));
   }
-  return out.map(x => x.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }));
+  return out.map(x => ({
+    label: x.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
+    raw: x.toISOString().slice(0, 10),
+  }));
 }

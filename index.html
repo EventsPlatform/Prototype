@@ -14,10 +14,10 @@
   <div class="wrap nav">
     <div class="brand" style="cursor:pointer" data-nav="marketplace"><div class="mark">L</div>Lensly</div>
     <div class="navlinks" id="navlinks">
-      <button data-nav="marketplace">Marketplace</button>
-      <button data-nav="about">About</button>
-      <button data-nav="meet">Meet the Team</button>
-      <button data-nav="contact">Contact</button>
+      <button class="navlink-btn" data-nav="marketplace">Marketplace</button>
+      <button class="navlink-btn" data-nav="about">About</button>
+      <button class="navlink-btn" data-nav="meet">Meet the Team</button>
+      <button class="navlink-btn" data-nav="contact">Contact</button>
     </div>
     <div class="navright">
       <div class="role-switch" id="roleSwitch">
@@ -26,7 +26,29 @@
         <button data-role="provider">Provider</button>
         <button data-role="admin">Admin</button>
       </div>
-      <button class="btn btn-ghost btn-sm" id="authBtn" data-nav="auth">Log in</button>
+      <button class="btn btn-ghost btn-sm auth-btn" id="authBtn" data-nav="auth">Log in</button>
+    </div>
+    <button class="hamburger" id="hamburgerBtn" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <div class="wrap">
+      <div class="mobile-menu-links" id="mobileNavLinks">
+        <button class="navlink-btn" data-nav="marketplace">Marketplace</button>
+        <button class="navlink-btn" data-nav="about">About</button>
+        <button class="navlink-btn" data-nav="meet">Meet the Team</button>
+        <button class="navlink-btn" data-nav="contact">Contact</button>
+      </div>
+      <div class="divider"></div>
+      <div class="hint" style="margin-bottom:8px;font-weight:600;">Viewing as</div>
+      <div class="role-switch mobile-role-switch">
+        <button data-role="guest" class="active">Guest</button>
+        <button data-role="consumer">Consumer</button>
+        <button data-role="provider">Provider</button>
+        <button data-role="admin">Admin</button>
+      </div>
+      <button class="btn btn-primary btn-block auth-btn" data-nav="auth" style="margin-top:16px;">Log in</button>
     </div>
   </div>
 </div>
@@ -189,11 +211,16 @@
     </div>
 
     <div class="card pad-lg" id="loginPanel">
-      <div class="field"><label>Email</label><input type="email" placeholder="you@example.com"></div>
-      <div class="field"><label>Password</label><input type="password" placeholder="••••••••"></div>
-      <p class="faint" style="font-size:12.5px;margin-bottom:16px;">2FA will be requested here for Provider and Admin accounts.</p>
+      <form onsubmit="event.preventDefault();mockLogin('consumer');">
+        <div class="field"><label>Email</label><input type="email" placeholder="you@example.com"></div>
+        <div class="field"><label>Password</label><input type="password" placeholder="••••••••"></div>
+        <p class="faint" style="font-size:12.5px;margin-bottom:16px;">2FA will be requested here for Provider and Admin accounts.</p>
+        <button type="submit" class="btn btn-primary btn-block">Log in</button>
+      </form>
+      <div class="divider"></div>
+      <p class="hint" style="margin-bottom:10px;font-weight:600;">This is a prototype — no real accounts exist. Jump straight into a role instead:</p>
       <div style="display:flex;flex-direction:column;gap:10px;">
-        <button class="btn btn-primary btn-block" onclick="mockLogin('consumer')">Log in as Consumer (demo)</button>
+        <button class="btn btn-ghost btn-block" onclick="mockLogin('consumer')">Log in as Consumer (demo)</button>
         <button class="btn btn-ghost btn-block" onclick="mockLogin('provider')">Log in as Provider (demo)</button>
         <button class="btn btn-ghost btn-block" onclick="mockLogin('admin')">Log in as Admin (demo)</button>
       </div>

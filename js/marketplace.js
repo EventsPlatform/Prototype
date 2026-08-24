@@ -8,7 +8,7 @@ function ratingBadge(p) {
   return `<span class="badge badge-gray">New · ${p.reviews} review${p.reviews === 1 ? '' : 's'}</span>`;
 }
 function providerCardHTML(p) {
-  return `<div class="card pcard" style="border-left-color:${tagColor(p.tags[0])}" onclick="navigate('provider',{providerId:${p.id}})">
+  return `<div class="card pcard" style="border-left-color:${tagColor(p.tags[0])}" tabindex="0" role="button" aria-label="View profile for ${p.name}" onclick="navigate('provider',{providerId:${p.id}})">
     <div class="cover" style="background:linear-gradient(135deg, ${tagColor(p.tags[0])}20, ${tagColor(p.tags[p.tags.length - 1])}30); display:flex; align-items:center; justify-content:center;">
       ${avatarHTML(p.name, 56)}
       ${p.bizType === 'business' ? '<div class="corner-badge"><span class="badge badge-accent">Business</span></div>' : ''}
@@ -74,7 +74,13 @@ function renderMarketplace() {
 }
 function setTag(t) { state.filterTag = t; state.page = 1; renderMarketplace(); }
 function loadMore() { state.page += 1; renderMarketplace(); }
-document.getElementById('searchInput').addEventListener('input', e => { state.search = e.target.value; state.page = 1; renderMarketplace(); });
-document.getElementById('sortSelect').addEventListener('change', e => { state.sort = e.target.value; renderMarketplace(); });
+
+let searchDebounceTimer;
+document.getElementById('searchInput').addEventListener('input', e => {
+  const val = e.target.value;
+  clearTimeout(searchDebounceTimer);
+  searchDebounceTimer = setTimeout(() => { state.search = val; state.page = 1; renderMarketplace(); }, 220);
+});
+document.getElementById('sortSelect').addEventListener('change', e => { state.sort = e.target.value; state.page = 1; renderMarketplace(); });
 document.getElementById('priceSelect').addEventListener('change', e => { state.priceRange = e.target.value; state.page = 1; renderMarketplace(); });
 document.getElementById('citySelect').addEventListener('change', e => { state.city = e.target.value; state.page = 1; renderMarketplace(); });

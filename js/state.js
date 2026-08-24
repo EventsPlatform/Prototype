@@ -15,6 +15,8 @@ let state = {
   regRole: 'consumer',
   bizType: 'individual',
   checkoutProviderId: null,
+  checkoutDate: null,
+  dashboardTab: null,
   lightboxProviderId: null,
   lightboxIndex: 0,
 };

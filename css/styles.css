@@ -73,7 +73,7 @@ textarea:focus-visible, [tabindex]:focus-visible {
 .hamburger.active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
 .mobile-menu { display: none; max-height: 0; overflow: hidden; border-top: 1px solid var(--border); background: var(--surface); transition: max-height .22s ease; }
-.mobile-menu.open { max-height: 80vh; overflow-y: auto; }
+.mobile-menu.open { display: block; max-height: 80vh; overflow-y: auto; }
 .mobile-menu .wrap { padding: 18px 24px 22px; }
 .mobile-menu-links { display: flex; flex-direction: column; gap: 2px; margin-bottom: 6px; }
 .mobile-menu-links button { text-align: left; background: none; border: none; padding: 12px 10px; border-radius: 8px; font-size: 15px; font-weight: 600; color: var(--text-dim); }
